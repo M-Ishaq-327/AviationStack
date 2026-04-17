@@ -1,90 +1,148 @@
-# ✈️ Flight Data Pipeline (Aviationstack API)
+# ✈️ Flight Data Pipeline (End-to-End AWS Project)
 
 ## 📌 Project Overview
 
-This project extracts real-time flight data from the Aviationstack API, processes it using Python, and saves both raw and cleaned datasets for further analysis.
+This project is a complete end-to-end data pipeline that extracts real-time flight data from the Aviationstack API, processes it, and analyzes it using AWS cloud services.
 
-It demonstrates a simple data pipeline workflow:
+It demonstrates a real-world data engineering workflow:
 
 * Data Extraction (API)
-* Data Storage (JSON)
-* Data Transformation (Pandas)
-* Data Export (CSV)
+* Data Ingestion (AWS Lambda)
+* Data Storage (Amazon S3)
+* Data Transformation (AWS Glue)
+* Data Querying (Amazon Athena)
+
+---
+
+## 🏗️ Architecture
+
+Pipeline Flow:
+
+API → Lambda → S3 (Raw) → Glue → S3 (Clean) → Athena
 
 ---
 
 ## ⚙️ Technologies Used
 
+### 🔹 Programming
+
 * Python
-* Requests (API calls)
-* Pandas (data processing)
-* JSON
-* Dotenv (environment variable management)
+* Pandas
+* Requests
+
+### 🔹 AWS Services
+
+* AWS Lambda
+* Amazon S3
+* AWS Glue (ETL & Data Catalog)
+* Amazon Athena
+* Amazon EventBridge (Scheduling)
+* Amazon CloudWatch (Monitoring)
 
 ---
 
 ## 🚀 How It Works
 
-### 1. Fetch Data
+### 1. Data Extraction (API)
 
-The script connects to the Aviationstack API and retrieves flight data for a specific airline.
+Flight data is fetched from the Aviationstack API using Python.
 
-### 2. Store Raw Data
+### 2. AWS Lambda (Automation)
 
-The API response is saved as a raw JSON file:
+Lambda function runs the script and:
 
-* `flights_raw.json`
+* Calls the API
+* Processes the response
+* Uploads raw data to S3
 
-### 3. Transform Data
+### 3. Amazon S3 (Storage)
 
-The JSON data is converted into a structured Pandas DataFrame and cleaned by selecting relevant columns.
+Data is stored in two layers:
 
-### 4. Export Clean Data
+* **Raw Layer** → Original JSON data
+* **Clean Layer** → Processed CSV data
 
-The processed dataset is saved as:
+### 4. AWS Glue (ETL & Catalog)
 
-* `flights_data.csv`
+* Crawlers detect schema
+* Tables are created in Glue Data Catalog
+* Data is prepared for querying
+
+### 5. Amazon Athena (Querying)
+
+* SQL queries are run directly on S3 data
+* Enables analytics without a database
+
+### 6. EventBridge (Scheduling)
+
+* Automates pipeline execution (e.g., hourly/daily)
+
+### 7. CloudWatch (Monitoring)
+
+* Logs Lambda execution
+* Helps debug pipeline issues
 
 ---
 
 ## 📂 Project Structure
 
-```
+```id="0g70cl"
 project-folder/
 │
-├── Code.ipynb
-├── .env                # API key (not pushed to GitHub)
+├── script.py
+├── lambda_function.py
+├── .env                # Local only (ignored)
 ├── .gitignore
-├── flights_raw.json    # outputfile
-└── flights_data.csv    # outputfile
+└── README.md
 ```
 
 ---
 
 ## 🔐 Environment Variables
 
-This project uses a `.env` file to store sensitive information.
+Sensitive data (like API keys) are stored securely:
+
+* Locally → `.env`
+* In AWS → Lambda Environment Variables
+
 Example:
-```
+
+```id="9yvd41"
 API_KEY=your_api_key_here
 ```
-Make sure `.env` is included in `.gitignore` to keep your API key secure.
 
 ---
-## ▶️ How to Run
+
+## ▶️ How to Run Locally
 
 1. Install dependencies:
-```
+
+```id="j3s0n9"
 pip install requests pandas python-dotenv
 ```
-2. Add your API key in `.env`
 
-3. Run the script:
+2. Add API key in `.env`
+
+3. Run:
+
+```id="x3s1p5"
+python script.py
 ```
-Code.ipynb
-```
+
 ---
+
+## ☁️ AWS Deployment Summary
+
+* Lambda function triggers API calls
+* Data stored in S3 (raw + processed)
+* Glue crawler creates tables
+* Athena queries data
+* EventBridge schedules execution
+
+---
+
 ## 📊 Sample Output Columns
+
 * flight
 * airline
 * from
@@ -93,19 +151,25 @@ Code.ipynb
 * arrival_time
 * status
 * delay
----
-## 🎯 Future Improvements
 
-* Automate pipeline using AWS Lambda
-* Store data in Amazon S3
-* Query data using AWS Athena
-* Add scheduling with EventBridge
-* Implement data quality checks
 ---
+
+## 🎯 Key Learnings
+
+* Building serverless data pipelines
+* Working with real-time APIs
+* Data transformation using Pandas & Glue
+* Querying data using Athena
+* Automating workflows with EventBridge
+
+---
+
 ## 👨‍💻 Author
+
 M.ISHAQ
+
 ---
+
 ## 📄 License
 
 This project is for educational purposes.
-
