@@ -75,7 +75,7 @@ Data is stored in two layers:
 
 ### 6. EventBridge (Scheduling)
 
-* Automates pipeline execution (e.g., hourly/daily)
+* Automates pipeline execution hourly
 
 ### 7. CloudWatch (Monitoring)
 
@@ -89,7 +89,7 @@ Data is stored in two layers:
 ```id="0g70cl"
 project-folder/
 │
-├── script.py
+├── Code.ipynb
 ├── lambda_function.py
 ├── .env                # Local only (ignored)
 ├── .gitignore
